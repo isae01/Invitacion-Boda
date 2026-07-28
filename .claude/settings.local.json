@@ -1,0 +1,37 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install *)",
+      "PowerShell(Get-ChildItem \"C:\\\\Users\\\\isabe\\\\OneDrive\\\\Desktop\\\\Invitacion Boda\" -Recurse -Depth 2 | Where-Object { $_.FullName -notmatch \"node_modules|dist|\\\\.git\" } | Select-Object FullName | Sort-Object FullName)",
+      "Bash(npm run *)",
+      "Skill(run)",
+      "Bash(npx --yes playwright --version)",
+      "Bash(node -e \"require.resolve\\('playwright'\\)\")",
+      "Bash(node -e \"require.resolve\\('puppeteer'\\)\")",
+      "Bash(npx --yes playwright install chromium --with-deps)",
+      "Read(//c/Users/isabe/AppData/Local/Temp/claude/C--Users-isabe-OneDrive-Desktop-Invitacion-Boda/2f3ab35f-b2f8-4a1c-933f-fc84ec7108e9/scratchpad/**)",
+      "Bash(npx --yes playwright@1.61.1 node screenshot-hero.mjs)",
+      "Bash(node screenshot-hero.mjs)",
+      "Bash(NODE_PATH=\"C:\\\\Users\\\\isabe\\\\AppData\\\\Local\\\\npm-cache\\\\_npx\\\\361ceb562f3b3235\\\\node_modules\" node screenshot-hero.mjs)",
+      "Bash(NODE_PATH=\"C:\\\\Users\\\\isabe\\\\AppData\\\\Local\\\\npm-cache\\\\_npx\\\\361ceb562f3b3235\\\\node_modules\" node screenshot-hero.cjs)",
+      "Bash(timeout 30 bash -c 'until curl -sf http://localhost:5173 >/dev/null; do sleep 1; done')",
+      "Bash(lsof -ti:5173 -sTCP:LISTEN)",
+      "Bash(xargs -r kill)",
+      "Bash(npx tsc *)",
+      "Read(//tmp/**)",
+      "Bash(curl *)",
+      "Bash(powershell.exe -c \"Start-Process 'http://localhost:5183/1'\")",
+      "Bash(powershell.exe -Command 'Get-Process -Name node -ErrorAction SilentlyContinue | Where-Object {$_.CommandLine -like '\\\\''*vite*'\\\\''} | Stop-Process -Force')",
+      "Bash(taskkill //F //FI \"WINDOWTITLE eq node*\")",
+      "Bash(ffmpeg -version)",
+      "PowerShell(Get-Command *)",
+      "Bash(netstat -ano)",
+      "Bash(node -e ' *)",
+      "Bash(npm --version)",
+      "Bash(npx eslint *)",
+      "Bash(timeout 8 npx tsx server/src/dev-server.ts)",
+      "Bash(wait)",
+      "Bash(pkill -f \"tsx server/src/dev-server.ts\")"
+    ]
+  }
+}

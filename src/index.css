@@ -1,0 +1,122 @@
+@import "tailwindcss";
+
+/* ── Design tokens (OKLCH · DESIGN.md §5 y §6) ─────────────────────── */
+@theme {
+  /* Steel Blue · tweakable según §14 */
+  --color-accent:          oklch(54% 0.07 240);
+  --color-accent-deep:     oklch(26% 0.05 245);
+  --color-accent-pale:     oklch(78% 0.03 240);
+
+  /* Lila claro para el fondo de Recepción/Fiesta — a diferencia de
+     accent-deep, este es un fondo CLARO (como surface), por eso Recepción
+     usa texto oscuro (text-ink / text-accent), no blanco. */
+  --color-party:           oklch(83% 0.025 240);
+
+  /* Verde en prueba para la frase de Historia (El Día) — mismo nivel de
+     saturación que el resto de la paleta (chroma 0.05-0.07), ni muy claro
+     ni muy oscuro para leerse bien sobre la tarjeta clara translúcida. */
+  --color-story-green:     oklch(40% 0.07 145);
+
+  /* Superficie y texto */
+  --color-surface:         #f7f8f9;
+  --color-ink:             #1f2933;
+  --color-ink-secondary:   #5a6772;
+  --color-ink-tertiary:    #8a97a1;
+
+  /* Bordes */
+  --color-border:          #e6eaed;
+  --color-border-light:    #edf0f2;
+
+  /* Tipografías */
+  --font-serif: "Cormorant Garamond", Georgia, serif;
+  --font-sans:  "Manrope", system-ui, sans-serif;
+}
+
+/* ── Base global ────────────────────────────────────────────────────── */
+html {
+  background-color: #f7f8f9;
+}
+
+body {
+  /* overflow-x solo en body, nunca en un contenedor intermedio (rompe   */
+  /* position: sticky de los hijos). Ponerlo también en html forzaría    */
+  /* overflow-y:auto en ambos (regla de CSS), creando dos scroll         */
+  /* containers anidados que rompen sticky igualmente — bug real         */
+  /* encontrado y corregido durante este proyecto.                       */
+  overflow-x: hidden;
+  background-color: #f7f8f9;
+  color: #1f2933;
+  font-family: "Manrope", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* En @layer base para que las utilidades de Tailwind (mx-auto, px-*, mt-*...)
+   puedan seguir ganándole a este reset — sin @layer, una regla normal le
+   gana a CUALQUIER utilidad de Tailwind sin importar especificidad, porque
+   las utilidades viven dentro de @layer utilities. Bug real: sin esto,
+   ningún margin/padding de Tailwind se aplicaba en todo el sitio. */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+/* ── Reveal por intersección (DESIGN.md §9A · usado por useReveal) ───── */
+.reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition:
+    opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal--scale {
+  transform: translateY(26px) scale(0.96);
+}
+
+.reveal.reveal--visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ── Balanceo del motivo botánico (DESIGN.md §10 · usado por BotanicalDecoration) ── */
+@keyframes sway {
+  0%,
+  100% {
+    transform: rotate(-2deg);
+  }
+  50% {
+    transform: rotate(2deg);
+  }
+}
+
+.animate-sway {
+  transform-origin: top center;
+  animation: sway 7.5s ease-in-out infinite;
+}
+
+/* ── "Tick" del countdown (DESIGN.md §8 · usado por Countdown) ───────── */
+@keyframes digit-tick {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-tick {
+  animation: digit-tick 0.4s ease-out;
+}
