@@ -67,7 +67,8 @@
       "Artifact",
       "Bash(echo \"exit code: $?\")",
       "Bash(git check-ignore *)",
-      "Bash(git add *)"
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)"
     ]
   }
 }

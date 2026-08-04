@@ -20,7 +20,7 @@ const LOOPED_SLIDES = [...SLIDES, ...SLIDES, ...SLIDES]
 /** Carrusel de recuerdos para los novios — swipe nativo (scroll-snap), sin librería. */
 function PhotoGallery() {
   const scrollerRef = useRef<HTMLDivElement>(null)
-  const settleTimeout = useRef<ReturnType<typeof setTimeout>>()
+  const settleTimeout = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
 
   useEffect(() => {
     const el = scrollerRef.current
