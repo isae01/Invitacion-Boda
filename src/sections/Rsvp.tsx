@@ -45,7 +45,10 @@ function Rsvp({ guestAccess }: RsvpProps) {
     Object.fromEntries(events.map((event) => [event.key, null]))
   )
   const [message, setMessage] = useState('')
-  const [attendees, setAttendees] = useState(1)
+  // '' es un estado intermedio válido mientras el invitado borra el campo
+  // para escribir un número nuevo — si se confirma vacío (blur o submit),
+  // se vuelve a 1.
+  const [attendees, setAttendees] = useState<number | ''>(1)
   const [submitted, setSubmitted] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState<string | null>(null)
@@ -91,7 +94,7 @@ function Rsvp({ guestAccess }: RsvpProps) {
       await apiPost('/api/rsvp', {
         fullName,
         status,
-        attendeesCount: attendees,
+        attendeesCount: attendees === '' ? 1 : attendees,
         message: finalMessage,
         discursoAttending,
         fiestaAttending,
@@ -113,7 +116,7 @@ function Rsvp({ guestAccess }: RsvpProps) {
         <Reveal>
           <p className="font-serif text-2xl italic">¡Gracias, {fullName}!</p>
           <p className="mt-3 text-sm text-white/70">
-            {allDeclined ? 'Te extrañaremos' : 'Los esperamos'}
+            {allDeclined ? 'Te extrañaremos' : attendees === 1 ? 'Te esperamos' : 'Los esperamos'}
           </p>
           <p className="mt-6 text-sm tracking-[2px] text-accent-pale">{date}</p>
         </Reveal>
@@ -236,7 +239,18 @@ function Rsvp({ guestAccess }: RsvpProps) {
                   aria-label={RSVP_ATTENDEES_LABEL}
                   className={cn(inputClasses, 'max-w-[80px]')}
                   value={attendees}
-                  onChange={(e) => setAttendees(Math.max(1, Number(e.target.value)))}
+                  onChange={(e) => {
+                    const raw = e.target.value
+                    if (raw === '') {
+                      setAttendees('')
+                      return
+                    }
+                    const parsed = Number(raw)
+                    if (!Number.isNaN(parsed)) setAttendees(Math.max(1, parsed))
+                  }}
+                  onBlur={() => {
+                    if (attendees === '') setAttendees(1)
+                  }}
                 />
               </div>
             </Reveal>
