@@ -15,13 +15,13 @@ interface EventStats {
  * null), se usa el status general del invitado — cubre invitados de un solo
  * evento y datos cargados desde /admin sin ese detalle.
  */
-function eventOutcome(status: RsvpStatus, attending: boolean | null): RsvpStatus {
+export function eventOutcome(status: RsvpStatus, attending: boolean | null): RsvpStatus {
   if (attending === true) return 'CONFIRMED'
   if (attending === false) return 'DECLINED'
   return status
 }
 
-function computeEventStats(
+export function computeEventStats(
   guests: Array<{ status: RsvpStatus; attendeesCount: number | null; maxAttendees: number }>,
   attendingByGuest: Array<boolean | null>,
 ): EventStats {

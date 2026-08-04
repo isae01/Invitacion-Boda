@@ -66,6 +66,11 @@ export async function updateGuest(id: string, input: UpdateGuestInput) {
     data: {
       ...input,
       ...(input.fullName && { normalizedName: normalizeName(input.fullName) }),
+      // El admin solo edita el status general, no discursoAttending/fiestaAttending
+      // (esos campos vienen del form público). Si vuelve a poner PENDING para
+      // "resetear" la respuesta, hay que limpiarlos también o el resumen por
+      // evento sigue mostrando la respuesta vieja aunque el status ya no la refleje.
+      ...(input.status === 'PENDING' && { discursoAttending: null, fiestaAttending: null }),
     },
   })
 }
