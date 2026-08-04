@@ -68,7 +68,9 @@
       "Bash(echo \"exit code: $?\")",
       "Bash(git check-ignore *)",
       "Bash(git add *)",
-      "Bash(git commit -m ' *)"
+      "Bash(git commit -m ' *)",
+      "Bash(git ls-tree *)",
+      "Bash(npx vercel *)"
     ]
   }
 }
