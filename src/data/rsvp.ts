@@ -22,3 +22,11 @@ export const RSVP_CALENDAR_LABEL: Record<EventKey, string> = {
   ceremonia: 'Agrega el discurso a tu calendario',
   recepcion: 'Agrega la fiesta a tu calendario',
 }
+
+/**
+ * Pregunta y label del campo de asistentes: pide el total incluyendo al
+ * invitado principal, para que no haya que adivinar si un acompañante
+ * (ej. su esposa) ya está contado o no.
+ */
+export const RSVP_ATTENDEES_QUESTION = '¿Cuántos de tu invitación asistirán (contándote a ti)?'
+export const RSVP_ATTENDEES_LABEL = 'Asistentes'

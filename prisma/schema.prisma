@@ -26,9 +26,11 @@ model Guest {
   normalizedName  String
   phone           String?
   invitationType  InvitationType
-  maxCompanions   Int             @default(0)
-  companionsCount Int?
+  maxAttendees    Int             @default(1)
+  attendeesCount  Int?
   status          RsvpStatus      @default(PENDING)
+  discursoAttending Boolean?
+  fiestaAttending   Boolean?
   message         String?
   respondedAt     DateTime?
   createdAt       DateTime        @default(now())

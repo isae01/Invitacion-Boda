@@ -1,17 +1,21 @@
 import { useState } from 'react'
-import { getVisibleEvents } from '../data/events'
+import { getVisibleEvents, type EventKey } from '../data/events'
 import { getHeroContent } from '../data/hero'
 import {
   RSVP_TITLE,
   RSVP_DEADLINE_REMINDER,
   RSVP_ATTENDANCE_QUESTION,
   RSVP_CALENDAR_LABEL,
+  RSVP_ATTENDEES_QUESTION,
+  RSVP_ATTENDEES_LABEL,
 } from '../data/rsvp'
 import { COUPLE } from '../data/couple'
 import { buildGoogleCalendarUrl, buildIcsDataUrl } from '../lib/calendar'
 import Container from '../components/Container'
 import Reveal from '../components/Reveal'
 import type { GuestAccess } from '../types/guestAccess'
+import { apiPost, ApiError } from '../lib/api'
+import { cn } from '../lib/cn'
 
 interface RsvpProps {
   guestAccess: GuestAccess
@@ -19,6 +23,11 @@ interface RsvpProps {
 
 const inputClasses =
   'w-full border-b border-white/30 bg-transparent py-2 text-center text-white placeholder:text-white/40 focus:border-white focus:outline-none'
+
+const EVENT_ADMIN_LABEL: Record<EventKey, string> = {
+  ceremonia: 'Discurso',
+  recepcion: 'Fiesta',
+}
 
 /**
  * RSVP + cierre (DESIGN.md §3 fila 12, §8): fondo steel-blue profundo,
@@ -36,22 +45,73 @@ function Rsvp({ guestAccess }: RsvpProps) {
     Object.fromEntries(events.map((event) => [event.key, null]))
   )
   const [message, setMessage] = useState('')
+  const [attendees, setAttendees] = useState(1)
   const [submitted, setSubmitted] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState<string | null>(null)
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Si ya dijo que no va a ningún evento visible, no tiene sentido
+  // preguntarle cuántos asistirán — el backend igual descarta ese número.
+  const allDeclined = events.every((event) => attendance[event.key] === false)
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setSubmitted(true)
+    setSubmitError(null)
+    setIsSubmitting(true)
+
+    // El backend guarda una sola confirmación por invitado, no una por
+    // evento: si declinó todos los eventos visibles, se envía DECLINED;
+    // si confirmó al menos uno, CONFIRMED.
+    const status = allDeclined ? 'DECLINED' : 'CONFIRMED'
+
+    // No hay un status por evento en el backend: si un invitado de "ambos"
+    // responde distinto a cada evento (p. ej. sí al discurso, no a la
+    // fiesta), ese detalle se pierde en el status único. Lo guardamos como
+    // texto en el mensaje para que quede visible en /admin.
+    const attendanceVaries =
+      events.length > 1 &&
+      events.some((event) => attendance[event.key] !== attendance[events[0].key])
+    const attendanceDetail = attendanceVaries
+      ? events
+          .map((event) => {
+            const value = attendance[event.key]
+            const label = value === true ? 'sí asistirá' : value === false ? 'no asistirá' : 'sin responder'
+            return `${EVENT_ADMIN_LABEL[event.key]}: ${label}`
+          })
+          .join(' · ')
+      : null
+    const finalMessage = [attendanceDetail, message.trim() || null].filter(Boolean).join(' — ') || undefined
+
+    const discursoAttending =
+      attendance.ceremonia === true ? true : attendance.ceremonia === false ? false : undefined
+    const fiestaAttending =
+      attendance.recepcion === true ? true : attendance.recepcion === false ? false : undefined
+
+    try {
+      await apiPost('/api/rsvp', {
+        fullName,
+        status,
+        attendeesCount: attendees,
+        message: finalMessage,
+        discursoAttending,
+        fiestaAttending,
+      })
+      setSubmitted(true)
+    } catch (err) {
+      setSubmitError(err instanceof ApiError ? err.message : 'No se pudo enviar tu respuesta. Intenta de nuevo.')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   if (submitted) {
-    const allDeclined = events.every((event) => attendance[event.key] === false)
     const confirmedEvents = events.filter((event) => attendance[event.key] === true)
     const guestLabel = `${COUPLE.groom} y ${COUPLE.bride}`
 
     return (
       <section className="bg-accent-deep px-6 py-24 text-center text-white">
         <Reveal>
-          <p className="font-serif text-2xl italic">¡Gracias, {fullName.split(' ')[0] || ''}!</p>
+          <p className="font-serif text-2xl italic">¡Gracias, {fullName}!</p>
           <p className="mt-3 text-sm text-white/70">
             {allDeclined ? 'Te extrañaremos' : 'Los esperamos'}
           </p>
@@ -166,12 +226,35 @@ function Rsvp({ guestAccess }: RsvpProps) {
             />
           </Reveal>
 
+          {!allDeclined && (
+            <Reveal>
+              <div className="flex flex-col items-center gap-3 text-center text-sm text-white/80">
+                <span>{RSVP_ATTENDEES_QUESTION}</span>
+                <input
+                  type="number"
+                  min={1}
+                  aria-label={RSVP_ATTENDEES_LABEL}
+                  className={cn(inputClasses, 'max-w-[80px]')}
+                  value={attendees}
+                  onChange={(e) => setAttendees(Math.max(1, Number(e.target.value)))}
+                />
+              </div>
+            </Reveal>
+          )}
+
+          {submitError && (
+            <Reveal>
+              <p className="text-center text-sm text-red-300">{submitError}</p>
+            </Reveal>
+          )}
+
           <Reveal>
             <button
               type="submit"
-              className="w-full rounded-full bg-white py-4 text-center text-[14px] font-bold text-accent-deep"
+              disabled={isSubmitting}
+              className="w-full rounded-full bg-white py-4 text-center text-[14px] font-bold text-accent-deep disabled:opacity-60"
             >
-              Confirmar asistencia
+              {isSubmitting ? 'Enviando…' : 'Confirmar asistencia'}
             </button>
           </Reveal>
 

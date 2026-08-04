@@ -180,12 +180,13 @@ No lleva música de fondo.
 
 Itinerario
 
+- Oración
 - Canción
 - Discurso
 - Votos
 - Canción
 - Oración
-- Fotografía
+- Fotografías
 
 Mesa de regalos
 
@@ -262,7 +263,6 @@ Itinerario completo
 
 Versión editorial que se mostrará en pantalla
 
-- Recepción
 - Fotografías
 - Palabras de los novios
 - Oración y comida
@@ -329,6 +329,9 @@ Campos
 - Nombre completo
 - ¿Asistirá? (por evento)
 - Mensaje (opcional)
+- Asistentes: cuántas personas en total asistirán, incluyendo al invitado
+  que llena el formulario (ej. si solo puede llevar a su esposa, el número
+  correcto es 2, no 1)
 
 Al confirmar asistencia
 

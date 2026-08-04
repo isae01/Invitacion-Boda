@@ -41,6 +41,11 @@ const captionOpacity = rampFraction(RING_GROW_END, CAPTION_FADE_IN_END);
 const BREATHE_PERIOD_MS = 32000; // ciclo completo, lento y pausado
 const BREATHE_AMPLITUDE = 0.07; // notorio, sin llegar a distraer
 const BREATHE_RISE_END = 0.55; // % del período que dura el acercamiento (fase larga); ahí mismo empieza a retroceder, sin pausa
+// Los primeros segundos de easeInOutQuart son casi planos (arranca casi sin
+// velocidad) — sin este empujón, el zoom tarda ~15s en notarse. Se desplaza
+// el ciclo hacia adelante para que ya arranque en una zona con movimiento
+// perceptible desde el primer frame, en vez de en el punto más plano de la curva.
+const BREATHE_INITIAL_OFFSET_MS = 7000;
 
 function easeInOutSine(x: number): number {
   return (1 - Math.cos(x * Math.PI)) / 2;
@@ -84,7 +89,9 @@ function HeroSequence({ guestAccess }: HeroSequenceProps) {
         parseFloat(container.style.getPropertyValue("--progress")) || 0;
 
       if (progress <= 0) {
-        const cycle = (time % BREATHE_PERIOD_MS) / BREATHE_PERIOD_MS;
+        const cycle =
+          ((time + BREATHE_INITIAL_OFFSET_MS) % BREATHE_PERIOD_MS) /
+          BREATHE_PERIOD_MS;
         const wave =
           cycle < BREATHE_RISE_END
             ? easeInOutQuart(cycle / BREATHE_RISE_END)

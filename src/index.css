@@ -17,6 +17,11 @@
      ni muy oscuro para leerse bien sobre la tarjeta clara translúcida. */
   --color-story-green:     oklch(40% 0.07 145);
 
+  /* Fondo casi imperceptible para las tarjetas de "por evento" del dashboard
+     del admin — mismo tono de azul (hue ~240) que el resto de la paleta,
+     apenas más claro que blanco (L 97%, C 0.013). */
+  --color-tint-summary:    oklch(97% 0.013 265);
+
   /* Superficie y texto */
   --color-surface:         #f7f8f9;
   --color-ink:             #1f2933;
@@ -64,11 +69,14 @@ body {
     margin: 0;
     padding: 0;
   }
-}
 
-img {
-  display: block;
-  max-width: 100%;
+  /* Mismo motivo que el reset de arriba: sin @layer, esta regla le gana a
+     cualquier utilidad de display de Tailwind (hidden, block, flex...)
+     aplicada directo sobre una <img>, sin importar especificidad. */
+  img {
+    display: block;
+    max-width: 100%;
+  }
 }
 
 /* ── Reveal por intersección (DESIGN.md §9A · usado por useReveal) ───── */
@@ -119,4 +127,13 @@ img {
 
 .animate-tick {
   animation: digit-tick 0.4s ease-out;
+}
+
+/* ── Scroll horizontal sin scrollbar visible (usado por el carrusel de fotos del admin) ── */
+.scrollbar-hide {
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
 }

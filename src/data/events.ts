@@ -39,12 +39,13 @@ export const EVENTS_DATA: Record<EventKey, EventInfo> = {
     dressCode: "Formal",
     music: "No lleva música de fondo.",
     itinerary: [
+      "Oración",
       "Canción",
       "Discurso",
       "Votos",
       "Canción",
       "Oración",
-      "Fotografía",
+      "Fotografías",
     ],
   },
   recepcion: {
@@ -60,7 +61,6 @@ export const EVENTS_DATA: Record<EventKey, EventInfo> = {
     dressCode: "Formal",
     music: "Here Comes The Sun",
     itinerary: [
-      "Recepción",
       "Fotografías",
       "Palabras de los novios",
       "Oración y comida",
