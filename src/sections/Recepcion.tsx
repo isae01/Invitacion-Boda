@@ -41,6 +41,7 @@ function Recepcion({ guestAccess }: RecepcionProps) {
         src="/images/bride.PNG"
         alt=""
         aria-hidden="true"
+        loading="lazy"
         className="pointer-events-none absolute -right-8 -bottom-6 z-0 w-[190px] opacity-20"
       />
       {/*
@@ -57,6 +58,7 @@ function Recepcion({ guestAccess }: RecepcionProps) {
         <img
           src="/images/novio hombre.PNG"
           alt=""
+          loading="lazy"
           className="absolute top-1"
           style={{ width: "260px", maxWidth: "none", left: "-65px" }}
         />

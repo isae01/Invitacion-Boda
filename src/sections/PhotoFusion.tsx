@@ -16,6 +16,7 @@ function PhotoFusion() {
           <img
             src="/images/IMG_9186.jpg"
             alt=""
+            loading="lazy"
             className="h-full w-full object-cover"
             style={{ objectPosition: "48% 55%" }}
           />
@@ -28,6 +29,7 @@ function PhotoFusion() {
           <img
             src="/images/IMG_9156.jpg"
             alt={`${COUPLE.bride} y ${COUPLE.groom}`}
+            loading="lazy"
             className="h-full w-full object-cover"
             style={{ objectPosition: "50% 22%" }}
           />
@@ -39,6 +41,7 @@ function PhotoFusion() {
           <img
             src="/images/IMG_9119.jpg"
             alt={`${COUPLE.bride} y ${COUPLE.groom}`}
+            loading="lazy"
             className="h-full w-full object-cover"
             style={{ objectPosition: "50% 55%" }}
           />

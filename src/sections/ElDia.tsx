@@ -43,6 +43,7 @@ function ElDia({ guestAccess }: ElDiaProps) {
           <img
             src="/images/IMG_9149.jpg"
             alt={`${COUPLE.groom} y ${COUPLE.bride}`}
+            loading="lazy"
             className="absolute inset-0 h-full w-full object-cover"
             style={{
               objectPosition: "45% 60%",
@@ -95,6 +96,7 @@ function ElDia({ guestAccess }: ElDiaProps) {
             src="/images/anillos.PNG"
             alt=""
             aria-hidden="true"
+            loading="lazy"
             className="pointer-events-none absolute -right-3 bottom-8 z-0 w-[141px] opacity-15 invert"
           />
           {/* BIBLIA — espejo de los anillos: misma posición vertical, tamaño,
@@ -104,6 +106,7 @@ function ElDia({ guestAccess }: ElDiaProps) {
             src="/images/biblia.PNG"
             alt=""
             aria-hidden="true"
+            loading="lazy"
             className="pointer-events-none absolute -left-1 bottom-8 z-0 w-[141px] opacity-15 invert"
           />
 

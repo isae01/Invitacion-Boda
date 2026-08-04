@@ -23,6 +23,7 @@ function WhereWhen({ guestAccess }: WhereWhenProps) {
         <img
           src="/images/IMG_9252.jpg"
           alt="Dónde y cuándo"
+          loading="lazy"
           className="absolute inset-0 h-full w-full object-cover"
           style={{ objectPosition: "48% 70%" }}
         />

@@ -20,6 +20,7 @@ function MapCard({ event }: MapCardProps) {
         <img
           src={EVENT_VENUE_PHOTO[event.key]}
           alt={event.location}
+          loading="lazy"
           className="absolute inset-0 h-full w-full object-cover"
           style={{ objectPosition: EVENT_VENUE_PHOTO_POSITION[event.key] }}
         />

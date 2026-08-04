@@ -13,6 +13,7 @@ function CircleFull() {
         <img
           src="/images/IMG_9101.jpg"
           alt={`${COUPLE.bride} y ${COUPLE.groom}`}
+          loading="lazy"
           className="h-full w-full object-cover"
           style={{ objectPosition: "50% 62%" }}
         />
@@ -21,6 +22,7 @@ function CircleFull() {
         <img
           src="/images/IMG_9312.jpg"
           alt={`${COUPLE.bride} y ${COUPLE.groom}`}
+          loading="lazy"
           className="h-full w-full object-cover"
           style={{ objectPosition: "52% 55%" }}
         />

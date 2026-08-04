@@ -8,6 +8,7 @@ function Footer() {
       <img
         src="/images/IMG_9252.jpg"
         alt=""
+        loading="lazy"
         className="absolute inset-0 h-full w-full object-cover"
         style={{ objectPosition: "50% 75%" }}
       />

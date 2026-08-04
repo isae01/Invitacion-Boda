@@ -70,7 +70,13 @@
       "Bash(git add *)",
       "Bash(git commit -m ' *)",
       "Bash(git ls-tree *)",
-      "Bash(npx vercel *)"
+      "Bash(npx vercel *)",
+      "Bash(sort -k5 -rnhttps://invitacion-boda-one-wine.vercel.app)",
+      "Bash(node -e \"require\\('sharp'\\); console.log\\('sharp available'\\)\")",
+      "Bash(node \"C:\\\\Users\\\\isabe\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\C--Users-isabe-OneDrive-Desktop-Invitacion-Boda\\\\3fb3940d-bdad-4391-94bb-ff75df47887e\\\\scratchpad\\\\compress-images.mjs\")",
+      "Bash(node _compress-images.mjs)",
+      "Bash(rm \"C:\\\\Users\\\\isabe\\\\OneDrive\\\\Desktop\\\\Invitacion Boda\\\\_compress-images.mjs\")",
+      "Bash(npm uninstall *)"
     ]
   }
 }
