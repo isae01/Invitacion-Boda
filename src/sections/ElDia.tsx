@@ -38,8 +38,12 @@ function ElDia({ guestAccess }: ElDiaProps) {
 
   return (
     <>
-      <section ref={containerRef} className="relative h-[150vh]">
-        <div className="sticky top-0 h-[100svh] overflow-hidden">
+      {/* dvh (no vh/svh): ver el comentario en HeroSequence.tsx — sincroniza
+          la altura pineada con el mismo viewport dinámico que mide
+          useScrollScrub, evita la franja blanca y el traqueteo del scroll
+          en mobile cuando el navegador esconde su barra. */}
+      <section ref={containerRef} className="relative h-[150dvh]">
+        <div className="sticky top-0 h-[100dvh] overflow-hidden">
           <img
             src="/images/IMG_9149.jpg"
             alt={`${COUPLE.groom} y ${COUPLE.bride}`}

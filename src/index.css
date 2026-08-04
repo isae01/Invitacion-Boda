@@ -39,6 +39,10 @@
 
 /* ── Base global ────────────────────────────────────────────────────── */
 html {
+  /* Mismo motivo que el <meta name="color-scheme"> en index.html: refuerza
+     que este sitio es solo-claro, para que el navegador no reinterprete
+     los colores en modo oscuro del sistema. */
+  color-scheme: light;
   background-color: #f7f8f9;
 }
 

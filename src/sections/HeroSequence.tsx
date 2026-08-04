@@ -13,7 +13,7 @@ interface HeroSequenceProps {
 }
 
 // Progreso (0→1) del contenedor pineado (Hero → Anillo → leyenda):
-const RING_START = 0.08; // más scroll antes de que el anillo empiece a aparecer
+const RING_START = 0; // el anillo empieza a crecer desde el primer scroll, sin espera
 const RING_GROW_END = 0.45; // el anillo termina de crecer (ease-in cuadrático), luego se queda estático
 const CAPTION_FADE_IN_END = 0.55; // la leyenda aparece sobre el anillo y se queda (no se desvanece)
 
@@ -117,9 +117,16 @@ function HeroSequence({ guestAccess }: HeroSequenceProps) {
     <>
       {/* 200vh (no 150vh): más recorrido de scroll para el mismo tramo de
           progreso del anillo — así el crecimiento no se salta aunque el
-          invitado haga scroll rápido. */}
-      <section ref={containerRef} className="relative h-[200vh]">
-        <div className="sticky top-0 h-[100svh] overflow-hidden">
+          invitado haga scroll rápido.
+          dvh (no svh): svh asume siempre el viewport más chico (barra del
+          navegador visible). En Samsung Internet/Chrome mobile la barra se
+          esconde AL scrollear, y como el JS de useScrollScrub mide el
+          progreso con window.innerHeight (que sí cambia en vivo), quedaban
+          desincronizados — se veía una franja blanca abajo de la foto
+          pineada y el efecto se trababa un instante. dvh se actualiza junto
+          con innerHeight, así los dos quedan sincronizados. */}
+      <section ref={containerRef} className="relative h-[200dvh]">
+        <div className="sticky top-0 h-[100dvh] overflow-hidden">
           <img
             ref={heroImgRef}
             src="/images/IMG_9289.jpg"

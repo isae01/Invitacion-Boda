@@ -78,7 +78,9 @@
       "Bash(rm \"C:\\\\Users\\\\isabe\\\\OneDrive\\\\Desktop\\\\Invitacion Boda\\\\_compress-images.mjs\")",
       "Bash(npm uninstall *)",
       "Bash(xargs grep -liE \"asisti|attend|rsvp\")",
-      "Bash(npx vitest *)"
+      "Bash(npx vitest *)",
+      "Bash(Get-Content src/App.tsx)",
+      "Bash(npx vite *)"
     ]
   }
 }

@@ -19,7 +19,9 @@ function WhereWhen({ guestAccess }: WhereWhenProps) {
 
   return (
     <section className="relative">
-      <div className="sticky top-0 h-[100svh] overflow-hidden">
+      {/* dvh: mismo motivo que en HeroSequence/ElDia — evita la franja
+          blanca al esconderse la barra del navegador en mobile. */}
+      <div className="sticky top-0 h-[100dvh] overflow-hidden">
         <img
           src="/images/IMG_9252.jpg"
           alt="Dónde y cuándo"
