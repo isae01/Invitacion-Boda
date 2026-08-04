@@ -41,7 +41,13 @@ export async function listGuests(query: ListGuestsQuery) {
 
 export function createGuest(input: CreateGuestInput) {
   return prisma.guest.create({
-    data: { ...input, normalizedName: normalizeName(input.fullName) },
+    data: {
+      fullName: input.fullName,
+      normalizedName: normalizeName(input.fullName),
+      phone: input.phone,
+      invitationType: input.invitationType,
+      maxAttendees: input.maxAttendees,
+    },
   })
 }
 

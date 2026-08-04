@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "tsc -b && tsc -p tsconfig.server.json --noEmit && vite build",
     "preview": "vite preview",
     "postinstall": "prisma generate",
     "dev:server": "tsx watch server/src/dev-server.ts",
