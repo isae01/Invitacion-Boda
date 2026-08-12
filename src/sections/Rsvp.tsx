@@ -140,7 +140,6 @@ function Rsvp({ guestAccess }: RsvpProps) {
                     </a>
                     <a
                       href={buildIcsDataUrl(event, guestLabel)}
-                      download={`${event.title}.ics`}
                       className="rounded-full border border-white/25 px-4 py-2.5 text-[13px] font-semibold text-white"
                     >
                       Apple / Outlook
