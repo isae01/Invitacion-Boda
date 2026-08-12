@@ -16,8 +16,12 @@ export function buildGoogleCalendarUrl(event: EventInfo, guestLabel: string): st
   return `https://calendar.google.com/calendar/render?${params.toString()}`
 }
 
-/** Archivo .ics como data URL, para Apple Calendar / Outlook (no requieren cuenta Google). */
-export function buildIcsDataUrl(event: EventInfo, guestLabel: string): string {
+/**
+ * Archivo .ics como blob URL, para Apple Calendar / Outlook (no requieren cuenta Google).
+ * Usa Blob en vez de una data: URL porque Safari/Chrome en iOS (ambos sobre WebKit)
+ * bloquean la navegación directa a URLs data: — el link no hacía nada al tocarlo.
+ */
+export function buildIcsBlobUrl(event: EventInfo, guestLabel: string): string {
   const lines = [
     'BEGIN:VCALENDAR',
     'VERSION:2.0',
@@ -31,5 +35,6 @@ export function buildIcsDataUrl(event: EventInfo, guestLabel: string): string {
     'END:VEVENT',
     'END:VCALENDAR',
   ]
-  return `data:text/calendar;charset=utf-8,${encodeURIComponent(lines.join('\r\n'))}`
+  const blob = new Blob([lines.join('\r\n')], { type: 'text/calendar;charset=utf-8' })
+  return URL.createObjectURL(blob)
 }

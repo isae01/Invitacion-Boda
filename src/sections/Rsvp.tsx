@@ -10,7 +10,7 @@ import {
   RSVP_ATTENDEES_LABEL,
 } from '../data/rsvp'
 import { COUPLE } from '../data/couple'
-import { buildGoogleCalendarUrl, buildIcsDataUrl } from '../lib/calendar'
+import { buildGoogleCalendarUrl, buildIcsBlobUrl } from '../lib/calendar'
 import Container from '../components/Container'
 import Reveal from '../components/Reveal'
 import type { GuestAccess } from '../types/guestAccess'
@@ -139,7 +139,8 @@ function Rsvp({ guestAccess }: RsvpProps) {
                       Google Calendar
                     </a>
                     <a
-                      href={buildIcsDataUrl(event, guestLabel)}
+                      href={buildIcsBlobUrl(event, guestLabel)}
+                      download={`${event.title}.ics`}
                       className="rounded-full border border-white/25 px-4 py-2.5 text-[13px] font-semibold text-white"
                     >
                       Apple / Outlook
